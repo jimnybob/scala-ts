@@ -1,0 +1,41 @@
+apply plugin: 'scala'
+
+group = 'com.github.jimnybob'
+version = '0.3.2.2'
+
+description = """Scala-ts"""
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+
+
+repositories {
+
+    maven { url "http://repo.maven.apache.org/maven2" }
+}
+dependencies {
+    compile group: 'org.scala-lang', name: 'scala-library', version: '2.11.8'
+    compile group: 'org.scala-lang', name: 'scala-reflect', version: '2.11.8'
+    testCompile group: 'org.scalatest', name: 'scalatest_2.11', version: '2.2.6'
+}
+
+jar {
+    baseName = "scala-ts_2.11"
+    version = "$version"
+}
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+                'Implementation-Version': version,
+                'Main-Class': 'com.mpc.scalats.CLI'
+    }
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}

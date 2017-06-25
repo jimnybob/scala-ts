@@ -1,8 +1,8 @@
 # scala-ts
 
-Mavenized version of [miloszpp/scala-ts](https://github.com/miloszpp/scala-ts)
+Gradlized version of [miloszpp/scala-ts](https://github.com/miloszpp/scala-ts)
 
-TODO: better documentation is coming.
+TODO: better documentation is NOT coming.
 
 
 tl;dr
@@ -10,13 +10,9 @@ tl;dr
 ##### Requirements
 - Scala 2.11
 
-##### Getting started using Maven
+##### Getting started using Gradle
 ```
-<dependency>
-  <groupId>com.github.wajda</groupId>
-  <artifactId>scala-ts_2.11</artifactId>
-  <version>0.3.2.2</version>
-</dependency>
+gradle fatJar
 ```
 
 ##### Usage
@@ -25,44 +21,33 @@ tl;dr
     java -cp ... com.mpc.scalats.CLI
 ```
 
-###### ... as a Maven plugin
+###### ... as a Gradle plugin
+I don't know how to write a Gradle plugin so I just use a JavaExec task.
 ```
-    <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>exec-maven-plugin</artifactId>
-        <version>1.5.0</version>
-        <executions>
-            <execution>
-                <phase>process-classes</phase>
-                <goals>
-                    <goal>java</goal>
-                </goals>
-            </execution>
-        </executions>
-        <configuration>
-            <includeProjectDependencies>true</includeProjectDependencies>
-            <includePluginDependencies>true</includePluginDependencies>
-            <executableDependency>
-                <groupId>com.github.wajda</groupId>
-                <artifactId>scala-ts_2.11</artifactId>
-            </executableDependency>
-            <mainClass>com.mpc.scalats.CLI</mainClass>
-            <arguments>
-                <argument>--out</argument>
-                <argument>${project.basedir}/target/generated-ts/my_model.ts</argument>
-                <argument>--emit-interfaces</argument>
-                <argument>--option-to-nullable</argument>
-                <argument>my.model.MyCaseClass</argument>
-                <argument>my.model.MyTrait</argument>
-                <argument>my.model.MyOtherTopLevelCaseClassesOrTraits</argument>
-            </arguments>
-        </configuration>
-        <dependencies>
-            <dependency>
-                <groupId>com.github.wajda</groupId>
-                <artifactId>scala-ts_2.11</artifactId>
-                <version>0.3.2.2</version>
-            </dependency>
-        </dependencies>
-    </plugin>
+configurations {
+    customClasspath
+}
+
+dependencies {
+    compile project(":myRESTProject")
+
+    customClasspath files("scala-ts_${scalaVersion}-all-0.3.2.2.jar")
+}
+	
+task generate(type: JavaExec) {
+
+    classpath = sourceSets.main.runtimeClasspath + configurations.customClasspath
+    main = 'com.mpc.scalats.CLI'
+
+    args '--emit-interfaces'
+    args '--emit-classes'
+    args '--option-to-nullable'
+    args 'com.example.MyFirstRESTDTO'
+    args 'com.example.MySecondsRESTDTO'
+
+    doFirst {
+        mkdir "${project.buildDir}/ts"
+        standardOutput = new FileOutputStream("${buildDir}/ts/model.ts")
+    }
+}
 ```
