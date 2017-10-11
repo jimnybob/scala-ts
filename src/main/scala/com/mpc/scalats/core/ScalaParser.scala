@@ -70,6 +70,10 @@ object ScalaParser {
       case "List" | "Seq" | "Set" =>
         val innerType = scalaType.asInstanceOf[scala.reflect.runtime.universe.TypeRef].args.head
         SeqRef(getTypeRef(innerType, typeParams))
+      case "Map" =>
+        val innerType = scalaType.asInstanceOf[scala.reflect.runtime.universe.TypeRef].args.head
+        val otherType = scalaType.asInstanceOf[scala.reflect.runtime.universe.TypeRef].args.last
+        MapRef(getTypeRef(innerType, typeParams), getTypeRef(otherType, typeParams))
       case "Option" =>
         val innerType = scalaType.asInstanceOf[scala.reflect.runtime.universe.TypeRef].args.head
         OptionRef(getTypeRef(innerType, typeParams))

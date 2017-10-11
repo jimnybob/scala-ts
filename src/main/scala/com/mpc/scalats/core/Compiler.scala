@@ -62,6 +62,8 @@ object Compiler {
       TypeScriptModel.StringRef
     case ScalaModel.SeqRef(innerType) =>
       TypeScriptModel.ArrayRef(compileTypeRef(innerType, inInterfaceContext))
+    case ScalaModel.MapRef(keyType, valueType) =>
+      TypeScriptModel.MapRef(compileTypeRef(keyType, inInterfaceContext), compileTypeRef(valueType, inInterfaceContext))
     case ScalaModel.CaseClassRef(name, typeArgs) =>
       val actualName = if (inInterfaceContext) s"I$name" else name
       TypeScriptModel.CustomTypeRef(actualName, typeArgs.map(compileTypeRef(_, inInterfaceContext)))

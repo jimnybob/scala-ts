@@ -12,6 +12,8 @@ object TypeScriptModel {
 
   case class ArrayRef(innerType: TypeRef) extends TypeRef
 
+  case class MapRef(keyType: TypeRef, valueType: TypeRef) extends TypeRef
+
   case class InterfaceDeclaration(name: String, members: List[Member], typeParams: List[String]) extends Declaration
 
   case class Member(name: String, typeRef: TypeRef)

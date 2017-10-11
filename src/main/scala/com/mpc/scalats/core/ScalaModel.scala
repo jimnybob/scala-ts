@@ -10,6 +10,8 @@ object ScalaModel {
 
   case class SeqRef(innerType: TypeRef) extends TypeRef
 
+  case class MapRef(keyType: TypeRef, valueType: TypeRef) extends TypeRef
+
   case class Entity(name: String, members: List[EntityMember], params: List[String])
 
   case class EntityMember(name: String, typeRef: TypeRef)
