@@ -50,11 +50,7 @@ object Compiler {
                               inInterfaceContext: Boolean
                             )
                             (implicit config: Config): TypeScriptModel.TypeRef = scalaTypeRef match {
-    case ScalaModel.IntRef =>
-      TypeScriptModel.NumberRef
-    case ScalaModel.LongRef =>
-      TypeScriptModel.NumberRef
-    case ScalaModel.DoubleRef =>
+    case ScalaModel.IntRef | ScalaModel.LongRef | ScalaModel.DoubleRef | ScalaModel.FloatRef =>
       TypeScriptModel.NumberRef
     case ScalaModel.BooleanRef =>
       TypeScriptModel.BooleanRef

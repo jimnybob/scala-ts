@@ -63,6 +63,8 @@ object ScalaParser {
         LongRef
       case "Double" =>
         DoubleRef
+      case "Float" =>
+        FloatRef
       case "Boolean" =>
         BooleanRef
       case "String" =>
