@@ -9,11 +9,13 @@ import com.mpc.scalats.core.TypeScriptGenerator
 
 trait Something
 
+case class UserId(userId: String)
+
 case class Foo[T, Q](a: T, b: List[Q])
 
 case class Bar(b: Foo[String, String], c: List[Foo[Int, String]])
 
-case class Xyz(bars: Option[List[Option[Bar]]], cache: Map[String,Something])
+case class Xyz(bars: Option[List[Option[Bar]]], cache: Map[UserId, UserId])
 
 object GenericsExample {
 

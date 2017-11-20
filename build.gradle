@@ -1,7 +1,7 @@
 apply plugin: 'scala'
 
 group = 'com.github.jimnybob'
-version = '0.3.2.4'
+version = '0.3.2.5'
 
 description = """Scala-ts"""
 

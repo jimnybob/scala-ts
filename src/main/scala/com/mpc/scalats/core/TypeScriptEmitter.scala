@@ -63,7 +63,7 @@ object TypeScriptEmitter {
     case StringRef => "string"
     case DateRef | DateTimeRef => "Date"
     case ArrayRef(innerType) => s"${getTypeRefString(innerType)}[]"
-    case MapRef(keyType, valueType) => s"Map<${getTypeRefString(keyType)}, ${getTypeRefString(valueType)}>"
+    case MapRef(_, valueType) => s"{ [s: string]: ${getTypeRefString(valueType)} }"
     case CustomTypeRef(name, params) if params.isEmpty => name
     case CustomTypeRef(name, params) if params.nonEmpty =>
       s"$name<${params.map(getTypeRefString).mkString(", ")}>"
