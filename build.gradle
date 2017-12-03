@@ -1,7 +1,7 @@
 apply plugin: 'scala'
 
 group = 'com.github.jimnybob'
-version = '0.3.2.5'
+version = '0.3.3'
 
 description = """Scala-ts"""
 
@@ -12,7 +12,18 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.maiflai:gradle-scalatest:0.18"
+    }
+}
 
+apply plugin: "com.github.maiflai.scalatest"
 
 repositories {
 
@@ -28,6 +39,7 @@ dependencies {
     compile group: 'org.scala-lang', name: 'scala-library', version: '2.11.8'
     compile group: 'org.scala-lang', name: 'scala-reflect', version: '2.11.8'
     testCompile group: 'org.scalatest', name: 'scalatest_2.11', version: '2.2.6'
+    testCompile("org.pegdown:pegdown:1.4.2")
 }
 
 jar {

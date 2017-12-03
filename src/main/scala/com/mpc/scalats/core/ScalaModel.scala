@@ -12,7 +12,7 @@ object ScalaModel {
 
   case class MapRef(keyType: TypeRef, valueType: TypeRef) extends TypeRef
 
-  case class Entity(name: String, members: List[EntityMember], params: List[String])
+  case class Entity(name: String, members: List[EntityMember], params: List[String], baseTypes: List[String], isTrait: Boolean)
 
   case class EntityMember(name: String, typeRef: TypeRef)
 
