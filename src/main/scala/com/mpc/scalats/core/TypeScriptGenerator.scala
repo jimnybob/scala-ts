@@ -52,7 +52,7 @@ object TypeScriptGenerator {
 
     def findMapInMember(member: EntityMember): Option[String] = {
       member.typeRef match {
-        case MapRef(CaseClassRef(keyName, _, _), _) => complexKeyTypeValid(keyName)
+        case MapRef(CaseClassRef(keyName, _), _) => complexKeyTypeValid(keyName)
         case MapRef(IntRef | StringRef | LongRef | DoubleRef | FloatRef | BooleanRef, _) => None
         case MapRef(unknown, _) => Some(s"Problem converting unknown map key of type $unknown to string in JSON object")
         case _ => None
