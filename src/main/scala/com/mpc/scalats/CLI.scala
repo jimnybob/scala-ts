@@ -25,7 +25,7 @@ object CLI {
     }
 
     val config = Config(
-//      emitInterfaces = options contains EmitInterfaces,
+      onlyPackages = options get OnlyPackages getOrElse(Seq.empty),
       emitClasses = options contains EmitClasses,
       optionToNullable = options contains OptionToNullable,
       optionToUndefined = options contains OptionToUndefined
@@ -35,11 +35,11 @@ object CLI {
     finally out.close()
   }
 
-  private def parseArgs(args: List[String]): CLIOpts = {
+  private[scalats] def parseArgs(args: List[String]): CLIOpts = {
     args match {
       case Nil => CLIOpts.empty
       case OutFile.key :: outFileName :: restArgs => parseArgs(restArgs) + (OutFile -> new File(outFileName))
-      case EmitInterfaces.key :: restArgs => parseArgs(restArgs) + (EmitInterfaces -> true)
+      case OnlyPackages.key :: packages :: restArgs => parseArgs(restArgs) + (OnlyPackages -> packages.split(",").map(_.trim).toSeq)
       case EmitClasses.key :: restArgs => parseArgs(restArgs) + (EmitClasses -> true)
       case OptionToNullable.key :: restArgs => parseArgs(restArgs) + (OptionToNullable -> true)
       case OptionToUndefined.key :: restArgs => parseArgs(restArgs) + (OptionToUndefined -> true)
@@ -54,7 +54,7 @@ object CLI {
       s"""
          |Usage: java com.mpc.scalats.Main
          |        [${OutFile.key} out.ts]
-         |        [${EmitInterfaces.key}]
+         |        [${OnlyPackages.key}] <comma-delimited list of packages>
          |        [${EmitClasses.key}]
          |        [${OptionToNullable.key}]
          |        [${OptionToUndefined.key}]

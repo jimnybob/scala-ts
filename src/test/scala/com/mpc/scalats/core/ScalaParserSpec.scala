@@ -1,5 +1,6 @@
 package com.mpc.scalats.core
 
+import com.mpc.scalats.configuration.Config
 import com.mpc.scalats.core.ScalaModel._
 import org.scalatest._
 
@@ -9,6 +10,8 @@ import scala.reflect.runtime.universe._
  * Created by Milosz on 06.12.2016.
  */
 class ScalaParserSpec extends FlatSpec with Matchers {
+
+  private implicit val config = Config()
 
   it should "parse case class with one primitive member" in {
     val parsed = ScalaParser.parseCaseClasses(List(TestTypes.TestClass1Type))

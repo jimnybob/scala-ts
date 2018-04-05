@@ -27,7 +27,7 @@ object CLIOpts {
 
   case object OutFile extends Key[File]("--out")
 
-  case object EmitInterfaces extends Key[Boolean]("--emit-interfaces")
+  case object OnlyPackages extends Key[Seq[String]]("--only-packages")
 
   case object EmitClasses extends Key[Boolean]("--emit-classes")
 
